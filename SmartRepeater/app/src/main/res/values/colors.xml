@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorBgGray">#808080</color>
+    <color name="colorBgGrayLight">#F0F5FA</color>
+    <color name="colorMusicItemTitle">#040404</color>
+    <color name="colorMusicItemArtist">#343434</color>
+    <color name="colorMusicItemDuration">#102030</color>
+</resources>

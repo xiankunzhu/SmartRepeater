@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgGrayLight"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.lefthand.smartrepeater.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <RelativeLayout
+        android:id="@+id/tab_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        >
+        <ImageView
+            android:id="@+id/tab_bg_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/tab_select_bg" />
+
+        <LinearLayout
+            android:id="@+id/tab_item_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="bottom"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/tab_btn_playlist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@null"
+                android:src="@drawable/tab_icon_01" />
+
+            <ImageView
+                android:id="@+id/tab_btn_repeater"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@null"
+                android:src="@drawable/tab_icon_02" />
+
+            <RelativeLayout
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/tab_btn_discover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/tab_icon_03" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/tab_btn_discover"
+                    android:layout_alignTop="@id/tab_btn_discover"
+                    android:background="@drawable/messages_bg"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/tab_btn_me"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@null"
+                android:src="@drawable/tab_icon_04" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_container">
+
+    </android.support.v4.view.ViewPager>
+
+<!--
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/colorBgGrayLight"
+        android:dividerHeight="1dp"
+         />
+    -->
+</RelativeLayout>
