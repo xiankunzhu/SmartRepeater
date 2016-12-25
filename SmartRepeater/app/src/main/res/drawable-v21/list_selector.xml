@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorPrimary"
+    >
     <item
         android:state_selected="false"
         android:state_pressed="false"
@@ -11,4 +13,4 @@
     <item android:state_selected="true"
         android:state_pressed="false"
         android:drawable="@drawable/list_item_bg_gradient_pressed" />
-</selector>
+</ripple>

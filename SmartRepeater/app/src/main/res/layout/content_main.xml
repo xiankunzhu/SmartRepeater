@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBgGrayLight"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.lefthand.smartrepeater.MainActivity"
+    tools:context="com.lefthand.smartrepeater.ui.activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <RelativeLayout
@@ -17,68 +17,74 @@
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         >
-        <ImageView
-            android:id="@+id/tab_bg_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@null"
-            android:src="@drawable/tab_select_bg" />
-
         <LinearLayout
             android:id="@+id/tab_item_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/tab_container_height"
             android:layout_centerVertical="true"
             android:gravity="bottom"
             android:orientation="horizontal" >
 
-            <ImageView
+            <TextView
                 android:id="@+id/tab_btn_playlist"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@null"
-                android:src="@drawable/tab_icon_01" />
+                android:text="@string/tab_btn_name_play_list"
+                android:textSize="@dimen/tab_item_text_size"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@drawable/tab_btn_selector"
+                android:clickable="true" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/tab_btn_repeater"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:text="Repeater"
+                android:textSize="@dimen/tab_item_text_size"
+                android:gravity="center"
                 android:contentDescription="@null"
-                android:src="@drawable/tab_icon_02" />
+                android:background="@drawable/tab_btn_selector"
+                android:clickable="true" />
 
-            <RelativeLayout
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" >
+            <TextView
+                android:id="@+id/tab_btn_discover"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Discover"
+                android:textSize="@dimen/tab_item_text_size"
+                android:gravity="center"
+                android:contentDescription="@null"
+                android:background="@drawable/tab_btn_selector"
+                android:clickable="true" />
 
-                <ImageView
-                    android:id="@+id/tab_btn_discover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@null"
-                    android:src="@drawable/tab_icon_03" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/tab_btn_discover"
-                    android:layout_alignTop="@id/tab_btn_discover"
-                    android:background="@drawable/messages_bg"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@android:color/white" />
-            </RelativeLayout>
-
-            <ImageView
+            <TextView
                 android:id="@+id/tab_btn_me"
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:text="Me"
+                android:textSize="@dimen/tab_item_text_size"
+                android:gravity="center"
                 android:contentDescription="@null"
-                android:src="@drawable/tab_icon_04" />
+                android:background="@drawable/tab_btn_selector"
+                android:clickable="true" />
+
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/tab_item_container"
+            android:layout_alignTop="@id/tab_item_container"
+            android:background="@drawable/messages_bg"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
