@@ -1,5 +1,6 @@
 package com.lefthand.smartrepeater.ui.activity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -53,11 +54,6 @@ public class MainActivity extends AppCompatActivity
 
         init();
 
-/*
-        ListView listView = (ListView) findViewById(R.id.list);
-        listView.setAdapter(new MyListAdapter(MainActivity.this));
-*/
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -69,7 +65,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void init(){
-
         mTab_item_container = (LinearLayout) findViewById(R.id.tab_item_container);
 
         mBtnPlayList = (TextView) findViewById(R.id.tab_btn_playlist);
@@ -97,7 +92,55 @@ public class MainActivity extends AppCompatActivity
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(myFragmentPagerAdapter);
 
-        //changeTo(mFragPlayList);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (mSelectIndex) {
+                    case 0:
+                        mBtnPlayList.setTypeface(null,Typeface.NORMAL);
+                        break;
+                    case 1:
+                        mBtnRepeater.setTypeface(null,Typeface.NORMAL);
+                        break;
+                    case 2:
+                        mBtnDiscover.setTypeface(null,Typeface.NORMAL);
+                        break;
+                    case 3:
+                        mBtnMe.setTypeface(null,Typeface.NORMAL);
+                        break;
+                }
+                switch (position) {
+                    case 0:
+                        mSelectIndex = 0;
+                        mBtnPlayList.setTypeface(null,Typeface.BOLD);
+                        break;
+                    case 1:
+                        mSelectIndex = 1;
+                        mBtnRepeater.setTypeface(null,Typeface.BOLD);
+                        break;
+                    case 2:
+                        mSelectIndex = 2;
+                        mBtnDiscover.setTypeface(null,Typeface.BOLD);
+                        break;
+                    case 3:
+                        mSelectIndex = 3;
+                        mBtnMe.setTypeface(null,Typeface.BOLD);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -179,18 +222,37 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
+        //set older one to normal
+        switch (mSelectIndex) {
+            case 0:
+                mBtnPlayList.setTypeface(null,Typeface.NORMAL);
+                break;
+            case 1:
+                mBtnRepeater.setTypeface(null,Typeface.NORMAL);
+                break;
+            case 2:
+                mBtnDiscover.setTypeface(null,Typeface.NORMAL);
+                break;
+            case 3:
+                mBtnMe.setTypeface(null,Typeface.NORMAL);
+                break;
+        }
         switch (v.getId()) {
             case R.id.tab_btn_playlist:
                 mSelectIndex = 0;
+                mBtnPlayList.setTypeface(null,Typeface.BOLD);
                 break;
             case R.id.tab_btn_repeater:
                 mSelectIndex = 1;
+                mBtnRepeater.setTypeface(null,Typeface.BOLD);
                 break;
             case R.id.tab_btn_discover:
                 mSelectIndex = 2;
+                mBtnDiscover.setTypeface(null,Typeface.BOLD);
                 break;
             case R.id.tab_btn_me:
                 mSelectIndex = 3;
+                mBtnMe.setTypeface(null,Typeface.NORMAL);
                 break;
             default:
                 break;

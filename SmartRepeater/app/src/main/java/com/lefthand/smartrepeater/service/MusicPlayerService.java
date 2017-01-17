@@ -1,13 +1,10 @@
 package com.lefthand.smartrepeater.service;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -17,25 +14,19 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 
-import com.lefthand.smartrepeater.bcr.HeadPhoneBroadcastReceiver;
+import com.lefthand.smartrepeater.receiver.HeadPhoneBroadcastReceiver;
 import com.lefthand.smartrepeater.binder.MusicPlayerServiceBinder;
 import com.lefthand.smartrepeater.model.Music;
 import com.lefthand.smartrepeater.model.PlayList;
 import com.lefthand.smartrepeater.util.CommonUtils;
-import com.lefthand.smartrepeater.R;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class MusicPlayerService extends Service implements MusicPlayerServiceInterface{
 
     public static final String MUSIC_PLAYER_SERVICE_NAME = "com.lefthand.smartrepeater.service.MusicPlayerService";
-    private static final String ACTION_PLAY = "com.lefthand.smartrepeater.PLAY";
+    public static final String ACTION_PLAY = "com.lefthand.smartrepeater.PLAY";
 
     private final String LOG_TAG = MusicPlayerService.class.getSimpleName();
 
@@ -43,10 +34,6 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
     public final static int PLAYING = 1;
     public final static String ACTIVITY_INDENTIFY = "ACTIVITY_INDENTIFY";
 
-
-
-    public final static String pathName = "/sdcard/smartRepeater/";
-    public final static String fileName = "playlist.txt";
 
     public final static String PlayingNumber = "PlayingNumber"; // 播放的序号
 
@@ -60,7 +47,8 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
     private AsyncTask<Integer, Void, Void> mSeekBarTracker;
 
     private MusicPlayerServiceBinder mBinder;
-    private List<Music> mPlayQueue; // playing list
+    private List<Music> list;
+    private PlayList playList;
     private int mPlayPosition = 0;
 
     private MediaPlayer mMediaPlayer;
@@ -72,8 +60,8 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
         Log.i(LOG_TAG, "onCreate");
         super.onCreate();
 //        registerBroadcastReceiver();
-        mPlayQueue = PlayList.loadAllInPlaylist().getPlaylist();
-
+        playList = PlayList.loadAllInPlaylist();
+        list = playList.getPlaylist();
     }
 
     @Override
@@ -91,10 +79,11 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
             mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mBinder.setTotalTime(mPlayQueue.get(mPlayPosition).getDuration().toString());
-                    mBinder.setMusicTitle(mPlayQueue.get(mPlayPosition).getTitle());
-                    mBinder.setMusicAlbum(mPlayQueue.get(mPlayPosition).getAlbum());
-                    mBinder.setMusicArtist(mPlayQueue.get(mPlayPosition).getAuthor());
+                    mBinder.setTotalTime(list.get(mPlayPosition).getDuration().toString());
+                    mBinder.setMusicTitle(list.get(mPlayPosition).getTitle());
+                    mBinder.setMusicAlbum(list.get(mPlayPosition).getAlbum());
+                    mBinder.setMusicArtist(list.get(mPlayPosition).getAuthor());
+
                     startSeekBarTracker(mMediaPlayer.getDuration());
                     play();
                 }
@@ -129,6 +118,11 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
     }
 
     @Override
+    public Context getApplicationContext() {
+        return super.getApplicationContext();
+    }
+
+    @Override
     public IBinder onBind(Intent intent) {
 
         mBinder = new MusicPlayerServiceBinder(this, this);
@@ -157,6 +151,13 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
 
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+
     public int getPlayingPosition(){
         if (mMediaPlayer != null)
             return mMediaPlayer.getCurrentPosition();
@@ -164,71 +165,11 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
             return 0;
     }
 
-    public List<Music> getPlayingQueue(){
-        return mPlayQueue;
-    }
 
     public int getCurrentPosition(){
         return mPlayPosition;
     }
 
-    public boolean storeSerializableList(){
-        List<Music> stores = new ArrayList<>();
-        /**
-         * 可能需要先对磁盘的挂载情况进行判断
-         */
-        try {
-            File path = new File(pathName);
-            File file = new File(pathName+fileName);
-            if (!path.exists()){
-                Log.d(LOG_TAG, "path create");
-                path.mkdir();
-            }
-            // if exist, delete and create
-            if (file.exists()){
-                file.delete();
-                file = new File(pathName+fileName);
-            }else {
-                file.createNewFile();
-            }
-
-            FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            stores.addAll(mPlayQueue);
-            oos.writeObject(stores);
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
-        Log.d(LOG_TAG, "store the current list serializable");
-        return true;
-    }
-
-    @Override
-    public void addMusicToQueue(Music bean) {
-        if (mPlayQueue == null) {
-            mPlayQueue = new ArrayList<>();
-        }
-        mPlayQueue.add(bean);
-    }
-
-    @Override
-    public void addMusicToQueue(List<Music> songs) {
-        if (mPlayQueue == null) {
-            mPlayQueue = new ArrayList<>();
-        }
-        mPlayQueue.addAll(songs);
-    }
-
-    @Override
-    public void removeMusicFromQueue(Music bean) {
-        mPlayQueue.remove(bean);
-    }
-
-    @Override
-    public void removeMusicFromQueue(List<Music> songs) {
-        mPlayQueue.removeAll(songs);
-    }
 
     @Override
     public void skipToPoint(int point) {
@@ -261,12 +202,6 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
         return true;
     }
 
-    /**
-     * 清空播放列表
-     */
-    public void clearMusicQueue(){
-        mPlayQueue.clear();
-    }
 
     public int changeState(){
         switch (state){
@@ -289,29 +224,33 @@ public class MusicPlayerService extends Service implements MusicPlayerServiceInt
     @Override
     public void play(int position) {
         this.mPlayPosition = position;
-        playFetched(mPlayQueue.get(position).getUrl());
+
+        playFetched(list.get(position).getUri().getPath());
     }
 
     public synchronized void playNext(){
-        if ((mPlayPosition +1) == mPlayQueue.size())
+        if ((mPlayPosition +1) == list.size())
             mPlayPosition = 0;
         else
             mPlayPosition++;
-        playFetched(mPlayQueue.get(mPlayPosition).getUrl());
+        playFetched(list.get(mPlayPosition).getUri().getPath());
+
     }
 
     public synchronized void playPrevious(){
         if ((mPlayPosition -1) == -1)
-            mPlayPosition = mPlayQueue.size()-1;
+            mPlayPosition = list.size()-1;
         else
             mPlayPosition--;
-        playFetched(mPlayQueue.get(mPlayPosition).getUrl());
+        playFetched(list.get(mPlayPosition).getUri().getPath());
+
     }
 
     // play music selected
     public synchronized void playFetched(String path) {
         playSetting(path);
-        storeSerializableList();
+        playList.storeListToFile();
+
     }
 
     public void playSetting(String path){

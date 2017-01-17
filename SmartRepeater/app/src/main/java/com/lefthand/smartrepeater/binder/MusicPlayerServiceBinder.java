@@ -15,6 +15,9 @@ public class MusicPlayerServiceBinder extends Binder {
         mContext = context;
     }
 
+    public MusicPlayerService getService(){
+        return mService;
+    }
     public MusicPlayerService getService(MusicPlayerServiceBinderCallBack seekBarTextCallBack){
         mCallback = seekBarTextCallBack;
         return mService;

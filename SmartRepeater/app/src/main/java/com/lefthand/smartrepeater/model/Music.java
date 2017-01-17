@@ -1,18 +1,22 @@
 package com.lefthand.smartrepeater.model;
 
+import android.net.Uri;
+
+import java.io.Serializable;
+
 import javax.xml.datatype.Duration;
 
 /**
  * Created by v-zxiank on 11/14/2016.
  */
 
-public class Music {
+public class Music implements Serializable{
     private int mId;
     private String mTitle;
     private String mAuthor;// artist
-    private String url; // or file path
-    private Duration duration;
-    private int current;
+    private Uri uri; // or file path
+    private String duration;
+
     private String mAlbum;
     public Music(int id, String title){
         setId(id);
@@ -43,28 +47,20 @@ public class Music {
         this.mAuthor = mAuthor;
     }
 
-    public String getUrl() {
-        return url;
+    public Uri getUri() {
+        return uri;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUri(Uri uri) {
+        this.uri = uri;
     }
 
-    public Duration getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
-    }
-
-    public int getCurrent() {
-        return current;
-    }
-
-    public void setCurrent(int current) {
-        this.current = current;
     }
 
     public String getAlbum() {
@@ -74,4 +70,5 @@ public class Music {
     public void setAlbum(String album){
         this.mAlbum = album;
     }
+
 }

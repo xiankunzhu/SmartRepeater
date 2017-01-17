@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.lefthand.smartrepeater.binder.MusicPlayerServiceBinder;
 import com.lefthand.smartrepeater.model.Music;
 import com.lefthand.smartrepeater.R;
+import com.lefthand.smartrepeater.model.PlayList;
 import com.lefthand.smartrepeater.service.MusicPlayerService;
 import com.lefthand.smartrepeater.ui.adapter.MyItemRecyclerViewAdapter;
 
@@ -85,6 +86,7 @@ public class FragPlayList extends Fragment {
         View root = inflater.inflate(R.layout.fragment_frag_play_list, container, false);
         View view = root.findViewById(R.id.list);
 
+        allInPlaylist = PlayList.loadAllInPlaylist().getPlaylist();
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -94,7 +96,7 @@ public class FragPlayList extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(allInPlaylist, new MyItemRecyclerViewAdapter(mListener));
+            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(allInPlaylist, mListener));
         }
         return root;
     }

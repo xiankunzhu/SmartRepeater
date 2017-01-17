@@ -7,7 +7,10 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="repeater_hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="playlist_empty_notification">There is no media source in list, Please use the add button in this screen to add media file or folder!</string>
+
 
     <string name="tab_btn_name_play_list">Home</string>
     <string name="tab_btn_name_repeater">Repeater</string>
