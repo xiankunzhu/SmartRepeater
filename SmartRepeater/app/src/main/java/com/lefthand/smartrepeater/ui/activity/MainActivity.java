@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragPlayList.OnListFragmentInteractionListener, FragRepeater.OnFragmentInteractionListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, FragRepeater.OnFragmentInteractionListener, View.OnClickListener {
 
     private TextView mBtnPlayList, mBtnRepeater, mBtnDiscover, mBtnMe;
     private LinearLayout mTab_item_container;
@@ -204,11 +204,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onListFragmentInteraction(Music item) {
-        // interaction with the fragement
     }
 
     @Override

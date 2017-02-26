@@ -8,24 +8,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lefthand.smartrepeater.model.Music;
-import com.lefthand.smartrepeater.ui.fragment.FragPlayList.OnListFragmentInteractionListener;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.lefthand.smartrepeater.R;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<Music> playlist;
-    private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List playlist, OnListFragmentInteractionListener listener) {
-        mListener = listener;
+    public MyItemRecyclerViewAdapter(List playlist) {
         this.playlist = playlist;
     }
 
@@ -48,11 +40,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
+
             }
         });
     }
